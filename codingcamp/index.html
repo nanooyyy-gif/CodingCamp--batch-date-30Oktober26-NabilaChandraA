@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense & Budget Visualizer</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== TOP BAR ===== -->
+  <header class="top-bar">
+    <h1 class="app-title">💰 BudgetTrack</h1>
+    <button id="themeToggle" class="icon-btn" title="Toggle dark/light mode">🌙</button>
+  </header>
+
+  <!-- ===== BALANCE CARD ===== -->
+  <main class="container">
+    <section class="balance-card">
+      <p class="balance-label">Total Balance</p>
+      <h2 class="balance-amount" id="balanceDisplay">Rp 0</h2>
+      <div class="balance-sub">
+        <div class="sub-item income">
+          <span class="sub-icon">⬆️</span>
+          <div>
+            <p class="sub-label">Income</p>
+            <p class="sub-value" id="incomeDisplay">Rp 0</p>
+          </div>
+        </div>
+        <div class="sub-item expense">
+          <span class="sub-icon">⬇️</span>
+          <div>
+            <p class="sub-label">Expense</p>
+            <p class="sub-value" id="expenseDisplay">Rp 0</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== NAV TABS ===== -->
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+      <button class="tab-btn" data-tab="monthly">Monthly</button>
+      <button class="tab-btn" data-tab="categories">Categories</button>
+    </nav>
+
+    <!-- ===== DASHBOARD TAB ===== -->
+    <section id="tab-dashboard" class="tab-panel active">
+
+      <!-- Add Transaction Form -->
+      <div class="card">
+        <h3 class="card-title">Add Transaction</h3>
+        <form id="transactionForm">
+          <div class="form-group">
+            <label for="txDesc">Description</label>
+            <input type="text" id="txDesc" placeholder="e.g. Lunch, Salary…" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="txAmount">Amount (Rp)</label>
+              <input type="number" id="txAmount" placeholder="0" min="1" required />
+            </div>
+            <div class="form-group">
+              <label for="txType">Type</label>
+              <select id="txType">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="txCategory">Category</label>
+              <select id="txCategory"></select>
+            </div>
+            <div class="form-group">
+              <label for="txDate">Date</label>
+              <input type="date" id="txDate" required />
+            </div>
+          </div>
+          <button type="submit" class="btn-primary">+ Add Transaction</button>
+        </form>
+      </div>
+
+      <!-- Chart -->
+      <div class="card">
+        <h3 class="card-title">Spending by Category</h3>
+        <div class="chart-wrap">
+          <canvas id="categoryChart"></canvas>
+          <p class="chart-empty" id="chartEmpty">No expense data yet.</p>
+        </div>
+        <div id="chartLegend" class="chart-legend"></div>
+      </div>
+
+      <!-- Transaction History -->
+      <div class="card">
+        <div class="card-header-row">
+          <h3 class="card-title">Transaction History</h3>
+          <button id="clearAll" class="btn-danger-sm">Clear All</button>
+        </div>
+        <div id="txList" class="tx-list">
+          <p class="empty-state">No transactions yet. Add one above!</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===== MONTHLY TAB ===== -->
+    <section id="tab-monthly" class="tab-panel">
+      <div class="card">
+        <h3 class="card-title">Monthly Summary</h3>
+        <div class="month-nav">
+          <button id="prevMonth" class="icon-btn">◀</button>
+          <span id="monthLabel" class="month-label"></span>
+          <button id="nextMonth" class="icon-btn">▶</button>
+        </div>
+        <div class="monthly-stats" id="monthlyStats"></div>
+        <canvas id="monthlyChart"></canvas>
+        <div id="monthlyTxList" class="tx-list" style="margin-top:1rem;"></div>
+      </div>
+    </section>
+
+    <!-- ===== CATEGORIES TAB ===== -->
+    <section id="tab-categories" class="tab-panel">
+      <div class="card">
+        <h3 class="card-title">Manage Categories</h3>
+        <form id="categoryForm" class="inline-form">
+          <input type="text" id="newCategoryInput" placeholder="New category name…" maxlength="30" />
+          <button type="submit" class="btn-primary">Add</button>
+        </form>
+        <ul id="categoryList" class="category-list"></ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== TOAST ===== -->
+  <div id="toast" class="toast"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
